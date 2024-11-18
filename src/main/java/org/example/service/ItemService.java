@@ -19,13 +19,18 @@ public class ItemService {
         Item result = getAllItems().stream()
                 .filter(item -> item.getId() == id)
                 .findFirst().orElse(null);
-        ClientRepo.INSTANCE.setQuantityItems(ClientRepo.INSTANCE.getQuantityItems() + 1);
-        if (result.getClass().equals(DiscountItem.class)) {
-            String format = df.format(ClientRepo.INSTANCE.getTotalSumma() + result.getPrice() - result.getPrice() * ((DiscountItem) result).getDiscount() / 100.0);
-            ClientRepo.INSTANCE.setTotalSumma(Double.parseDouble(format.replace(',', '.')));
-        } else {
-            ClientRepo.INSTANCE.setTotalSumma(ClientRepo.INSTANCE.getTotalSumma() + result.getPrice());
+        if(result!=null) {
+            ClientRepo.INSTANCE.setQuantityItems(ClientRepo.INSTANCE.getQuantityItems() + 1);
+            if (result.getClass().equals(DiscountItem.class)) {
+                String format = df.format(ClientRepo.INSTANCE.getTotalSumma() + result.getPrice() - result.getPrice() * ((DiscountItem) result).getDiscount() / 100.0);
+                ClientRepo.INSTANCE.setTotalSumma(Double.parseDouble(format.replace(',', '.')));
+            } else {
+                ClientRepo.INSTANCE.setTotalSumma(ClientRepo.INSTANCE.getTotalSumma() + result.getPrice());
+            }
+            new ItemRepo().updateItem(id);
         }
-        new ItemRepo().updateItem(id);
+        else {
+            System.out.println("Invalid input");
+        }
     }
 }
