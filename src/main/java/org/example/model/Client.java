@@ -9,9 +9,6 @@ public class Client {
         this.totalSumma = totalSumma;
     }
 
-    public Client() {
-    }
-
     public int getQuantityItems() {
         return quantityItems;
     }

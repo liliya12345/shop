@@ -8,17 +8,10 @@ public class DiscountItem  extends Item {
         this.discount = discount;
     }
 
-    public DiscountItem() {
-    }
-
-
     public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
 
     @Override
     public String toString() {
